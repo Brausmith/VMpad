@@ -6,19 +6,20 @@ enum {
 	Apps_1_5,
 	Apps_2_6,
 	Apps_3_7,
-	Apps_4_8
+	Apps_4_8,
+	Win_1_5,
+	Win_2_6,
+	Win_3_7,
+	Win_4_8
 };
 
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-	// Zoom (To be reviewed)
-	// [Zm_Scrn] = ACTION_TAP_DANCE_DOUBLE(LALT(KC_S), LALT(KC_T))
-
 	// Switch between Windows applications using default shortcuts of CTRL+Win+[Num]
     [Win_1_5] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_1)), LCTL(LGUI(KC_5))),
 	[Win_2_6] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_2)), LCTL(LGUI(KC_6))),
 	[Win_3_7] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_3)), LCTL(LGUI(KC_7))),
-	[Win_4_8] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_4)), LCTL(LGUI(KC_8))),
+	[Win_4_8] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_4)), LCTL(LGUI(KC_8)))
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -27,7 +28,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                         Common (Layer 0)                        *
  *******************************************************************
  * ,---------------------------------------------------------------.
- * |    Layer 3    |    Layer 1    |    Layer 2    |               |
+ * |    Layer 1    |    Layer 2    |    Layer 3    |               |
  * |---------------+---------------+---------------+---------------|
  * |               |               |               | Window to Top |
  * |---------------+---------------+---------------+---------------|
@@ -41,14 +42,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Cursor Highlighter: https://www.autohotkey.com/boards/viewtopic.php?t=78701
  */
 [0] = LAYOUT_ortho_4x4(
-	KC_NO,			LT(4,TO(1)),	LT(5,TO(2)),	KC_NO,
-	KC_NO,			KC_NO,			KC_NO,			HYPR(KC_W),
-	KC_NO,			KC_NO,			KC_NO,			HYPR(KC_C),
+	MO(1),			TO(2),			TO(3),			KC_NO,
+	KC_NO,			KC_NO,			KC_NO,			MEH(KC_W),
+	KC_NO,			KC_NO,			KC_NO,			MEH(KC_C),
 	TD(Win_1_5),	TD(Win_2_6),	TD(Win_3_7),	TD(Win_4_8)
 ),
 
 /*******************************************************************
- *                          Zoom (Layer 1)                         *
+ *                    Windows Settings (Layer 1)                   *
+ *******************************************************************
+ * ,---------------------------------------------------------------.
+ * |     Trans     |    Layer 4    |    Layer 5    |     Reset     |
+ * |---------------+---------------+---------------+---------------|
+ * |               |               |               |               |
+ * |---------------+---------------+---------------+---------------|
+ * | Mic Settings  | Cam Settings  | Disp Settings | Mous Settings |
+ * |---------------+---------------+---------------+---------------|
+ * |               |               |               |               |
+ * `---------------------------------------------------------------'
+ *
+ * Access to a few handy Windows Settings.
+ *
+ * Required Autohotkey scripts
+ * All: 
+ */
+[1] = LAYOUT_ortho_4x4(
+	KC_TRNS,		MO(4),			MO(5),			RESET,
+	KC_NO,			KC_NO,			KC_NO,			KC_NO,
+	MEH(KC_A),		MEH(KC_V),		MEH(KC_D),		MEH(KC_M),
+	KC_NO,			KC_NO,			KC_NO,			KC_NO
+),
+
+/*******************************************************************
+ *                          Zoom (Layer 2)                         *
  *******************************************************************
  * ,---------------------------------------------------------------.
  * |     Trans     |     Trans     |     Trans     |               |
@@ -70,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Alt+T: Pause or resume screen share
  * Alt+C: Start/stop cloud recording
  */
-[1] = LAYOUT_ortho_4x4(
+[2] = LAYOUT_ortho_4x4(
 	KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_NO,
 	A(KC_H),		KC_NO,			A(KC_Y),		KC_TRNS,
 	A(KC_A),		A(KC_V),		A(KC_S),		KC_TRNS,
@@ -78,7 +104,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 /*******************************************************************
- *                        MS Teams (Layer 2)                       *
+ *                        MS Teams (Layer 3)                       *
  *******************************************************************
  * ,---------------------------------------------------------------.
  * |     Trans     |     Trans     |     Trans     |               |
@@ -95,9 +121,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Ctrl+Shift+M: Toggle mute
  * Ctrl+Shift+O: Toggle video
  * Ctrl+Shift+E: Start screen share session
- * Ctrl+Shift+B: End meeting
  */
-[2] = LAYOUT_ortho_4x4(
+[3] = LAYOUT_ortho_4x4(
 	KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_NO,
 	KC_NO,			KC_NO,			C(S(KC_K)),		KC_TRNS,
 	C(S(KC_M)),		C(S(KC_O)),		C(S(KC_E)),		KC_TRNS,
@@ -105,35 +130,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 /*******************************************************************
- *                    Windows Settings (Layer 3)                   *
- *******************************************************************
- * ,---------------------------------------------------------------.
- * |     Trans     |               |               |               |
- * |---------------+---------------+---------------+---------------|
- * |               |               |               |               |
- * |---------------+---------------+---------------+---------------|
- * | Mic Settings  | Cam Settings  | Disp Settings | Mous Settings |
- * |---------------+---------------+---------------+---------------|
- * |               |               |               |               |
- * `---------------------------------------------------------------'
- *
- * Access to a few handy Windows Settings.
- *
- * Required Autohotkey scripts
- * All: 
- */
-[3] = LAYOUT_ortho_4x4(
-	KC_TRNS,		KC_NO,			KC_NO,			KC_NO,
-	KC_NO,			KC_NO,			KC_NO,			KC_NO,
-	HYPR(KC_A),		HYPR(KC_C),		HYPR(KC_D),		HYPR(KC_M),
-	KC_NO,			KC_NO,			KC_NO,			KC_NO
-),
-
-/*******************************************************************
  *                       Zoom Extras (Layer 4)                     *
  *******************************************************************
  * ,---------------------------------------------------------------.
- * |    Record     |     Trans     |               |  End Meeting  |
+ * |     Trans     |     Trans     |               |  End Meeting  |
  * |---------------+---------------+---------------+---------------|
  * |               |               |               |               |
  * |---------------+---------------+---------------+---------------|
@@ -143,10 +143,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------------------------------------------'
  *
  * A safer multi-key combo to end the meeting.
- *
+ * Alt+Q: End meeting
  */
 [4] = LAYOUT_ortho_4x4(
-	A(KC_C),		KC_TRNS,		KC_NO,			HYPR(KC_ESC),
+	KC_TRNS,		KC_TRNS,		KC_NO,			A(KC_Q),
 	KC_NO,			KC_NO,			KC_NO,			KC_NO,
 	KC_NO,			KC_NO,			KC_NO,			KC_NO,
 	KC_NO,			KC_NO,			KC_NO,			KC_NO
@@ -156,7 +156,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *                     MS Teams Extras (Layer 5)                   *
  *******************************************************************
  * ,---------------------------------------------------------------.
- * |               |     Trans     |               |  End Meeting  |
+ * |     Trans     |               |     Trans     |  End Meeting  |
  * |---------------+---------------+---------------+---------------|
  * |               |               |               |               |
  * |---------------+---------------+---------------+---------------|
@@ -166,10 +166,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------------------------------------------'
  *
  * A safer multi-key combo to end the meeting.
- *
+ * Ctrl+Shift+B: End meeting
  */
 [5] = LAYOUT_ortho_4x4(
-	KC_NO,			KC_TRNS,		KC_NO,			C(S(KC_B)),
+	KC_TRNS,		KC_NO,			KC_TRNS,		C(S(KC_B)),
 	KC_NO,			KC_NO,			KC_NO,			KC_NO,
 	KC_NO,			KC_NO,			KC_NO,			KC_NO,
 	KC_NO,			KC_NO,			KC_NO,			KC_NO
