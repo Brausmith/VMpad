@@ -2,11 +2,7 @@
 
 // Declarations
 enum {
-    Shar_T_P,
-	Apps_1_5,
-	Apps_2_6,
-	Apps_3_7,
-	Apps_4_8,
+    ZmSh_P_T,	// Double-Tap for share toggle so share is not accidentally toggled off
 	Win_1_5,
 	Win_2_6,
 	Win_3_7,
@@ -16,7 +12,8 @@ enum {
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
 	// Switch between Windows applications using default shortcuts of CTRL+Win+[Num]
-    [Win_1_5] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_1)), LCTL(LGUI(KC_5))),
+	[ZmSh_P_T] = ACTION_TAP_DANCE_DOUBLE(LALT(KC_T), LALT(KC_S)),
+	[Win_1_5] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_1)), LCTL(LGUI(KC_5))),
 	[Win_2_6] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_2)), LCTL(LGUI(KC_6))),
 	[Win_3_7] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_3)), LCTL(LGUI(KC_7))),
 	[Win_4_8] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_4)), LCTL(LGUI(KC_8)))
@@ -58,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |---------------+---------------+---------------+---------------|
  * | Mic Settings  | Cam Settings  | Disp Settings | Mous Settings |
  * |---------------+---------------+---------------+---------------|
- * |               |               |               |               |
+ * |   BL Toggle   |    BL Step    |               |               |
  * `---------------------------------------------------------------'
  *
  * Access to a few handy Windows Settings.
@@ -70,7 +67,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	KC_TRNS,		MO(4),			MO(5),			RESET,
 	KC_NO,			KC_NO,			KC_NO,			KC_NO,
 	MEH(KC_A),		MEH(KC_V),		MEH(KC_D),		MEH(KC_M),
-	KC_NO,			KC_NO,			KC_NO,			KC_NO
+	BL_TOGG,		BL_STEP,		KC_NO,			KC_NO
 ),
 
 /*******************************************************************
@@ -92,14 +89,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Alt+Y: Raise/lower hand
  * Alt+A: Mute/unmute audio
  * Alt+V: Start/stop video
- * Alt+S: Launch share screen window and stop screen share
  * Alt+T: Pause or resume screen share
+ * Alt+S: Launch share screen window and stop screen share
  * Alt+C: Start/stop cloud recording
  */
 [2] = LAYOUT_ortho_4x4(
 	KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_NO,
 	A(KC_H),		KC_NO,			A(KC_Y),		KC_TRNS,
-	A(KC_A),		A(KC_V),		A(KC_S),		KC_TRNS,
+	A(KC_A),		A(KC_V),		TD(ZmSh_P_T),	KC_TRNS,
 	KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_TRNS
 ),
 
