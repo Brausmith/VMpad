@@ -2,7 +2,7 @@
 
 // Declarations
 enum {
-    ZmSh_P_T,	// Double-Tap for share toggle so share is not accidentally toggled off
+    ZmSh_P_T,
 	Win_1_5,
 	Win_2_6,
 	Win_3_7,
@@ -11,8 +11,10 @@ enum {
 
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
-	// Switch between Windows applications using default shortcuts of CTRL+Win+[Num]
+	// Screen Share requires a double-tap so it is not accidentally toggled off during a session. 8^P Tap to Pause/Unpause
 	[ZmSh_P_T] = ACTION_TAP_DANCE_DOUBLE(LALT(KC_T), LALT(KC_S)),
+
+	// Switch between Windows applications using the default shortcuts combo of CTRL+Win+[Num]
 	[Win_1_5] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_1)), LCTL(LGUI(KC_5))),
 	[Win_2_6] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_2)), LCTL(LGUI(KC_6))),
 	[Win_3_7] = ACTION_TAP_DANCE_DOUBLE(LCTL(LGUI(KC_3)), LCTL(LGUI(KC_7))),
@@ -27,7 +29,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,---------------------------------------------------------------.
  * |    Layer 1    |    Layer 2    |    Layer 3    |               |
  * |---------------+---------------+---------------+---------------|
- * |               |               |               | Window to Top |
+ * |               |               |               | Window On Top |
  * |---------------+---------------+---------------+---------------|
  * |               |               |               |   Cursor HL   |
  * |---------------+---------------+---------------+---------------|
@@ -35,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `---------------------------------------------------------------'
  *
  * Required Autohotkey scripts
- * Window to Top: 
+ * Window Always on Top: https://github.com/Brausmith/VMpad/blob/ff55bd2670d466604aa7d8804590dfdd46110483/AutoHotkey/VMpad.ahk
  * Cursor Highlighter: https://www.autohotkey.com/boards/viewtopic.php?t=78701
  */
 [0] = LAYOUT_ortho_4x4(
@@ -61,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * Access to a few handy Windows Settings.
  *
  * Required Autohotkey scripts
- * All: 
+ * All: https://github.com/Brausmith/VMpad/blob/ff55bd2670d466604aa7d8804590dfdd46110483/AutoHotkey/VMpad.ahk
  */
 [1] = LAYOUT_ortho_4x4(
 	KC_TRNS,		MO(4),			MO(5),			RESET,
@@ -85,13 +87,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *
  * https://support.zoom.us/hc/en-us/articles/205683899-hot-keys-and-keyboard-for-zoom
  * Alt+H: Display/hide in-meeting chat panel
- * : Q&A Panel ??
+ * : Q&A Panel ?? *** Still trying to determine if this has a shortcut? ***
  * Alt+Y: Raise/lower hand
  * Alt+A: Mute/unmute audio
  * Alt+V: Start/stop video
  * Alt+T: Pause or resume screen share
  * Alt+S: Launch share screen window and stop screen share
- * Alt+C: Start/stop cloud recording
+ * Alt+C: Start/stop cloud recording *** This is currently not implemented ***
  */
 [2] = LAYOUT_ortho_4x4(
 	KC_TRNS,		KC_TRNS,		KC_TRNS,		KC_NO,
